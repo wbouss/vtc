@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <title>Facture</title>
+</head>
+<body>
+    <h1>Facture</h1><p>Company Name <br>Adresse de l'agence,<br /> code postale ville <br>015463216</p>
+
+    <div>Fait le {{ reservation.date|date("d-m-Y H:i") }}</div>
+
+    <div style="text-align: center;">
+        <h4>Votre Reservation</h4>
+   </div>
+
+
+    <main>
+    <table>
+        <thead>
+        <tr style="border: solid black 1px">
+            {% if reservation.user.lastName is defined %}
+                <th>Nom</th>
+            {% endif %}
+            <th>Depart</th>
+            <th>Arrive</th>
+            <th>Date</th>
+            <th>Nombre Bagage</th>
+            <th>Nombre Personne</th>
+            <th>Prix</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            {% if reservation.user.lastName is defined %}
+                <td>{{ reservation.user.lastName }}</td>
+            {% endif %}
+            <td>{{ reservation.depart }}</td>
+            <td>{{ reservation.arrive }}</td>
+            <td>{{ reservation.datePrevu|date("d-m-Y H:i") }}</td>
+            <td>{{ reservation.nbBagage }}</td>
+            <td>{{ reservation.nbPersonne }}</td>
+            <td>{{ reservation.prix }}</td>
+        </tr>
+        </tbody>
+    </table>
+</main>
+<br/><br/>
+<div>
+    Pour tout compléments d'informations, veuille directement prendre contact avec l'agence
+</div>
+</body>
+</html>
+<style>
+    body{font-size: 9px;}
+    table{ border:solid black 1px;}
+    th{ border:solid black 1px;font-weight: bold;background-color:whitesmoke;}
+    tr{ border:solid black 1px;}
+    td{ border:solid black 1px;}
+
+</style>

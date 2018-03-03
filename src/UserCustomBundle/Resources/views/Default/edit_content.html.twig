@@ -1,0 +1,164 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+{# empty Twig template #}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>VTC</title>
+
+    <!-- css -->
+    {% stylesheets '../vendor/twbs/bootstrap/dist/css/bootstrap.min.css'  filter='cssrewrite' output='css/bootstrap.css' %}
+    <link rel='stylesheet' href='{{ asset_url }}' />
+    {% endstylesheets %}
+
+
+    {% javascripts
+    '@AppBundle//Resources/public/js/jquery.js' %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
+    {% javascripts
+    '../vendor/twbs/bootstrap/dist/js/bootstrap.min.js' %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+    <style>
+
+
+        /* Side notes for calling out things
+        -------------------------------------------------- */
+
+        /* Base styles (regardless of theme) */
+        .bs-callout {
+            margin: 20px 0;
+            padding: 15px 30px 15px 15px;
+            border-left: 5px solid #eee;
+        }
+        .bs-callout h1,
+        .bs-callout h2,
+        .bs-callout h3,
+        .bs-callout h4,
+        .bs-callout h5,
+        .bs-callout h6 {
+            margin-top: 0;
+        }
+
+        .bs-callout-danger h1,
+        .bs-callout-danger h2,
+        .bs-callout-danger h3,
+        .bs-callout-danger h4,
+        .bs-callout-danger h5,
+        .bs-callout-danger h6 {
+            color: #B94A48;
+        }
+
+        .bs-callout-warning h1,
+        .bs-callout-warning h2,
+        .bs-callout-warning h3,
+        .bs-callout-warning h4,
+        .bs-callout-warning h5,
+        .bs-callout-warning h6 {
+            color: #C09853;
+        }
+
+        .bs-callout-info h1,
+        .bs-callout-info h2,
+        .bs-callout-info h3,
+        .bs-callout-info h4,
+        .bs-callout-info h5,
+        .bs-callout-info h6 {
+            color: #3A87AD;
+        }
+
+        .bs-callout-success h1,
+        .bs-callout-success h2,
+        .bs-callout-success h3,
+        .bs-callout-success h4,
+        .bs-callout-success h5,
+        .bs-callout-success h6 {
+            color: #3C763D;
+        }
+
+        .bs-callout p:last-child {
+            margin-bottom: 0;
+        }
+
+        .bs-callout code,
+        .bs-callout .highlight {
+            background-color: #fff;
+        }
+
+        /* Themes for different contexts */
+        .bs-callout-danger {
+            background-color: #fcf2f2;
+            border-color: #dFb5b4;
+        }
+        .bs-callout-warning {
+            background-color: #fefbed;
+            border-color: #f1e7bc;
+        }
+        .bs-callout-info {
+            background-color: white;
+            border-color: #d0e3f0;
+        }
+        .bs-callout-success {
+            background-color: #dff0d8;
+            border-color: #d6e9c6;
+        }
+    </style>
+</head>
+
+<body>
+<center><h4>Profil utilisateur</h4></center>
+
+
+{{ form_start(form, { 'action': path('usercustom_edit'), 'attr': { 'class': 'fos_user_profile_edit' } }) }}
+{# Les erreurs générales du formulaire. #}
+{{ form_errors(form) }}
+<center>
+<btn >
+    <div style="width:  610px;">
+        <div style="display: inline-block;width:  300px;vertical-align: top">
+    <div class="form-group">
+        {{ form_label(form.email, "Adresse E-mail ", {'label_attr': {}}) }}
+        {{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
+    </div>
+
+    <div class="form-group">
+        {{ form_label(form.lastName, "Nom", {'label_attr': {}}) }}
+        {{ form_widget(form.lastName, {'attr': {'class': 'form-control'}}) }}
+    </div>
+    <div class="form-group">
+        {{ form_label(form.firstName, "Prénom", {'label_attr': {}}) }}
+        {{ form_widget(form.firstName, {'attr': {'class': 'form-control'}}) }}
+    </div>
+    <div class="form-group">
+        {{ form_label(form.telephone, "Téléphone ", {'label_attr': {}}) }}
+        {{ form_widget(form.telephone, {'attr': {'class': 'form-control'}}) }}
+    </div>
+        </div>
+        <div style="display: inline-block;width:  300px;vertical-align: top">
+    <div class="form-group">
+        {{ form_label(form.adresse, "Adresse", {'label_attr': {}}) }}
+        {{ form_widget(form.adresse, {'attr': {'class': 'form-control'}}) }}
+    </div>
+    <div class="form-group">
+        {{ form_label(form.ville, "Ville", {'label_attr': {}}) }}
+        {{ form_widget(form.ville, {'attr': {'class': 'form-control'}}) }}
+    </div>
+    <div class="form-group">
+        {{ form_label(form.codepostale, "Code Postale", {'label_attr': {}}) }}
+        {{ form_widget(form.codepostale, {'attr': {'class': 'form-control'}}) }}
+    </div>
+    <div style="padding-top: 25px;">
+        <input class="btn btn-primary" style="height:35px;width: 280px" type="submit" value="{{ 'profile.edit.submit'|trans({}, 'FOSUserBundle') }}" />
+    </div>
+        </div>
+    </div>
+    {{ form_end(form) }}
+
+</form>
+<br>
+    <button onClick="location.href = '{{ path('usercustom_change_password') }}'" type="button" class="btn btn-warning">Changer de mot de passe </button>
+</center>
+

@@ -1,0 +1,967 @@
+{% include 'AppBundle:Default:header.html.twig' %}
+<!-- Button trigger modal -->
+
+<body>
+
+<style>
+    form[name=appbundle_contact] button{
+        width: 100%;
+        height: 40px;
+    }
+    #closeModalErrorsButton{
+        border: 1px solid grey;
+        border-radius: 4px;
+    }
+</style>
+
+<!--.preloader-->
+<div class="preloader"> <i class="fa fa-circle-o-notch fa-spin"></i></div>
+<!--/.preloader-->
+
+<header id="home">
+    <div id="home-slider" class="carousel slide carousel-fade" data-ride="carousel">
+        <div class="carousel-inner">
+            <div class="item active" style="background-image: url(images/slider/2.jpg)">
+                <div class="caption">
+                    <h1 class="animated fadeInLeftBig">ReserverUn<span>Vtc</span></h1>
+                    <p class="animated fadeInRightBig">Rapidité - Qualité - Aimabilité - Serviabilité</p>
+                    <a data-scroll class="btn btn-start animated fadeInUpBig" href="#services">Reserver !</a>
+                </div>
+            </div>
+            <div class="item" style="background-image: url(images/slider/1.jpg)">
+                <div class="caption">
+                    <h1 class="animated fadeInLeftBig">ReserverUn<span>Vtc</span></h1>
+                    <p class="animated fadeInRightBig">Rapidité - Qualité - Aimabilité - Serviabilité</p>
+                    <a data-scroll class="btn btn-start animated fadeInUpBig" href="#services">Reserver !</a>
+                </div>
+            </div>
+            <div class="item" style="background-image: url(images/slider/4.jpg)">
+                <div class="caption">
+                    <h1 class="animated fadeInLeftBig">ReserverUn<span>Vtc</span></h1>
+                    <p class="animated fadeInRightBig">Rapidité - Qualité - Aimabilité - Serviabilité</p>
+                    <a data-scroll class="btn btn-start animated fadeInUpBig" href="#services">Reserver !</a>
+                </div>
+            </div>
+        </div>
+        <a class="left-control" href="#home-slider" data-slide="prev"><i class="fa fa-angle-left"></i></a>
+        <a class="right-control" href="#home-slider" data-slide="next"><i class="fa fa-angle-right"></i></a>
+
+        <a id="tohash" href="#services"><i class="fa fa-angle-down"></i></a>
+
+    </div><!--/#home-slider-->
+
+    <div class="main-nav">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Menu</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html">
+
+                    <h1> {% image '@AppBundle/Resources/public/images/logo.png'
+                        output='/images/logo.jpg' %}
+                        <img src="{{ asset_url }}" alt="Example"/>
+                        {% endimage %}</h1>
+                </a>
+            </div>
+            <div class="collapse navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="scroll active"><a href="#home">Accueil</a></li>
+                    <li><a href='#services'  >Reservation</a></li>
+                    <li class="scroll"><a href="#pricing">Nos forfaits</a></li>
+                    <li class="scroll"><a href="#contact-us">Contact</a></li>
+                    {% if is_granted('ROLE_USER') %}
+                        <li ><a href="{{ path("moncompte_profile") }}">Mon compte</a></li>
+                    {% else %}
+                        <li><a href="{{ path("moncompte") }}">Mon compte</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </div><!--/#main-nav-->
+</header><!--/#home-->
+<section id="services">
+    <div class="container">
+
+        <div class="heading wow fadeInUp" id="backdiv" data-wow-duration="1000ms" data-wow-delay="300ms">
+            <div class="row">
+                <div class="text-center col-sm-8 col-sm-offset-2">
+                    <!--<h2>Estimation et reservation</h2>!-->
+                    <div class="gtco-container">
+                        <div class="row">
+                            <div class="col-md-12 col-md-offset-0 text-left">
+
+
+                                <div class="row row-mt-15em">
+                                    <div class="col-md-7 mt-text animate-box" data-animate-effect="fadeInUp">
+                                        <h1 style="color: white !important">Reservez votre chauffeur en quelque clics !</h1>
+
+                                    </div>
+
+                                    <div class="col-md-4 col-md-push-1 animate-box" data-animate-effect="fadeInRight">
+
+                                        <div class="form-wrap">
+                                            <div class="tab">
+
+                                                <div class="tab-content">
+                                                    <div class="tab-content-inner active" data-content="signup">
+                                                        <h3 style="color: white !important">Estimation & Reservation</h3>
+                                                        {{ form_start(form_devis, { 'attr': { 'id' : 'appbundleid_devis' , 'onsubmit': 'return checkErrorForm();' }, 'action': path('reservation'), 'method': 'POST'}) }}
+                                                        <div class="row form-group">
+                                                            <div class="col-md-12">
+                                                                {# Génération du label. #}
+                                                                {{ form_label(form_devis.depart, "Départ", {'label_attr': { 'style': 'color: white !important' ,  'class': 'col-sm-2 control-label'}}) }}
+                                                                {# Affichage des erreurs pour ce champ précis. #}
+                                                                {{ form_errors(form_devis.depart) }}
+                                                                {# Génération de l'input. #}
+                                                                {{ form_widget(form_devis.depart, {'attr': { 'style': 'height:35px;background: white;' , 'class': 'form-control'}}) }}
+                                                            </div>
+
+                                                            <div class="col-md-12">
+                                                            {# Génération du label. #}
+                                                            {{ form_label(form_devis.arrive, "Arrivé", {'label_attr': { 'style': 'color: white !important' ,  'class': 'col-sm-2 control-label'}}) }}
+                                                            {# Affichage des erreurs pour ce champ précis. #}
+                                                            {{ form_errors(form_devis.arrive) }}
+                                                                {# Génération de l'input. #}
+                                                                {{ form_widget(form_devis.arrive, {'attr': { 'style': 'height:35px;background: white;' , 'class': 'form-control'}}) }}
+                                                            </div>
+
+                                                            <div class="col-md-12">
+                                                                {# Génération du label. #}
+                                                                {{ form_label(form_devis.datePrevu, "date", {'label_attr': { 'style': 'color: white !important' ,  'class': 'col-sm-2 control-label'}}) }}
+                                                                {# Affichage des erreurs pour ce champ précis. #}
+                                                                {{ form_errors(form_devis.datePrevu) }}
+                                                                {# Génération de l'input. #}
+                                                                {{ form_widget(form_devis.datePrevu, {'attr': { 'style': 'height:35px;background: white;' , 'class': 'form-control datepickerPrevu'}}) }}
+                                                            </div>
+
+                                                            <div class="col-md-12">
+                                                                {# Génération du label. #}
+                                                                {{ form_label(form_devis.nbPersonne, "nbPersonne", {'label_attr': { 'style': 'color: white !important' ,  'class': 'col-sm-2 control-label'}}) }}
+                                                                {# Affichage des erreurs pour ce champ précis. #}
+                                                                {{ form_errors(form_devis.nbPersonne) }}
+                                                                {# Génération de l'input. #}
+                                                                {{ form_widget(form_devis.nbPersonne, {'attr': { 'style': 'height:35px;background: white;' , 'class': 'form-control'}}) }}
+                                                            </div>
+
+                                                            <div class="col-md-12">
+                                                                {# Génération du label. #}
+                                                                {{ form_label(form_devis.nbBagage, "nbBagage", {'label_attr': { 'style': 'color: white !important' ,  'class': 'col-sm-2 control-label'}}) }}
+                                                                {# Affichage des erreurs pour ce champ précis. #}
+                                                                {{ form_errors(form_devis.nbBagage) }}
+                                                                {# Génération de l'input. #}
+                                                                {{ form_widget(form_devis.nbBagage, {'attr': { 'style': 'height:35px;background: white;' , 'class': 'form-control'}}) }}
+                                                            </div>
+                                                            <div class="col-md-12" style="margin-top: 15px;">
+                                                                {{ form_widget(form_devis.submit, { 'label': 'Obtenir un prix'  , 'attr': {  'style': 'width:100%;height:35px;' , 'class': 'btn btn-primary'}}) }}
+                                                            </div>
+
+                                                        </div>
+
+                                                    </div>
+                                                    {{ form_end(form_devis) }}
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="text-center our-services">
+            <div class="row">
+                <div class="col-sm-4 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="300ms">
+                    <div class="service-icon">
+                        <i class="fa fa-dashboard"></i>
+                    </div>
+                    <div class="service-info">
+                        <h3>Service rapide </h3>
+                        <p>Nos chauffeurs sont en déplacements partout en île de france, ce qui nous assure un service très rapide</p>
+                    </div>
+                </div>
+                <div class="col-sm-4 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="450ms">
+                    <div class="service-icon">
+                        <i class="fa fa-automobile"></i>
+                    </div>
+                    <div class="service-info">
+                        <h3>Service de qualité</h3>
+                        <p>Nous vous proposons des services de qualité uniquement ! la qualité est notre priorité.</p>
+                    </div>
+                </div>
+                <div class="col-sm-4 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="550ms">
+                    <div class="service-icon">
+                        <i class="fa fa-calendar"></i>
+                    </div>
+                    <div class="service-info">
+                        <h3>Réservation en avance</h3>
+                        <p>Profitez de notre plateforme de reservation instantanée ou en avance pour plus de tranquilité !</p>
+                    </div>
+                </div>
+                <div class="col-sm-4 wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="650ms">
+                    <div class="service-icon">
+                        <i class="fa fa-coffee"></i>
+                    </div>
+                    <div class="service-info">
+                        <h3>Boissons à bord</h3>
+                        <p>Dégustez une boisson à bord de nos véhicules ! Nous vous proposons gratuitement une boisson fraîche</p>
+                    </div>
+                </div>
+                <div class="col-sm-4 wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="750ms">
+                    <div class="service-icon">
+                        <i class="fa fa-wifi"></i>
+                    </div>
+                    <div class="service-info">
+                        <h3>Wifi</h3>
+                        <p>Nous vous mettons à disposition une connexion wifi gratuite rapide à board de nos véhicules</p>
+                    </div>
+                </div>
+                <div class="col-sm-4 wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="850ms">
+                    <div class="service-icon">
+                        <i class="fa fa-fighter-jet"></i>
+                    </div>
+                    <div class="service-info">
+                        <h3>Service Aéroport</h3>
+                        <p>Profitez d'un accueil chaleureux après votre vol. Nous vous acceuillerons avec une boisson. </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section><!--/#services-->
+<section id="about-us" class="parallax">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="about-info wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="300ms">
+                    <h2>A propos de nous</h2>
+                    <p>ReserverUnVtc est une société proposons le transport privée de personne depuis plus de 4 ans. Fort de notre expertise, ReserverUnVtc assure un service de qualité et rapide. </p>
+                    <p>Notre priorité principal est d'offrir le meilleur service à nos clients.</p>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="our-skills wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="300ms">
+                    <div class="single-skill wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="300ms">
+                        <p class="lead">Experience Utilisateur</p>
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-primary six-sec-ease-in-out" role="progressbar"  aria-valuetransitiongoal="95">95%</div>
+                        </div>
+                    </div>
+                    <div class="single-skill wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="400ms">
+                        <p class="lead">Rapidité</p>
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-primary six-sec-ease-in-out" role="progressbar"  aria-valuetransitiongoal="97">97%</div>
+                        </div>
+                    </div>
+                    <div class="single-skill wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="500ms">
+                        <p class="lead">Qualité</p>
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-primary six-sec-ease-in-out" role="progressbar"  aria-valuetransitiongoal="98">98%</div>
+                        </div>
+                    </div>
+                    <div class="single-skill wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
+                        <p class="lead">Aimabilité</p>
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-primary six-sec-ease-in-out" role="progressbar"  aria-valuetransitiongoal="96">96%</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section><!--/#about-us-->
+
+<section id="portfolio">
+    <div class="container">
+        <div class="row">
+            <div class="heading text-center col-sm-8 col-sm-offset-2 wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="300ms">
+                <h2>Notre Portfolio</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua ut enim ad minim veniam</p>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-3">
+                <div class="folio-item wow fadeInRightBig" data-wow-duration="1000ms" data-wow-delay="300ms">
+                    <div class="folio-image">
+                        {% image '@AppBundle/Resources/public/images/portfolio/image5.jpg'
+                        output='/images/image5.jpg' %}
+                        <img src="{{ asset_url }}" alt=""/>
+                        {% endimage %}
+                    </div>
+                    <div class="overlay">
+                        <div class="overlay-content">
+                            <div class="overlay-text">
+                                <div class="folio-info">
+                                    <h3>Le 23 Janvier 2018</h3>
+                                    <p>Paris, France</p>
+                                </div>
+                                <div class="folio-overview">
+                                    <span class="folio-link"><a class="folio-read-more" href="#" data-single_url=" " ><i class="fa fa-link"></i></a></span>
+                                    <span class="folio-expand"><a href="images/portfolio/image5.jpg" data-lightbox="portfolio"><i class="fa fa-search-plus"></i></a></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="folio-item wow fadeInLeftBig" data-wow-duration="1000ms" data-wow-delay="400ms">
+                    <div class="folio-image">
+                        {% image '@AppBundle/Resources/public/images/portfolio/image4.jpg'
+                        output='/images/images4.jpg' %}
+                        <img src="{{ asset_url }}" alt=""/>
+                        {% endimage %}
+                    </div>
+                    <div class="overlay">
+                        <div class="overlay-content">
+                            <div class="overlay-text">
+                                <div class="folio-info">
+                                    <h3>Le 18 Janvier 2018</h3>
+                                    <p>Créteil, France</p>
+                                </div>
+                                <div class="folio-overview">
+                                    <span class="folio-link"><a class="folio-read-more" href="#" data-single_url=" " ><i class="fa fa-link"></i></a></span>
+                                    <span class="folio-expand"><a href="images/portfolio/image4.jpg" data-lightbox="portfolio"><i class="fa fa-search-plus"></i></a></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="folio-item wow fadeInRightBig" data-wow-duration="1000ms" data-wow-delay="500ms">
+                    <div class="folio-image">
+                        {% image '@AppBundle/Resources/public/images/portfolio/image1.jpg'
+                        output='/images/image1.jpg' %}
+                        <img src="{{ asset_url }}" alt=""/>
+                        {% endimage %}
+                    </div>
+                    <div class="overlay">
+                        <div class="overlay-content">
+                            <div class="overlay-text">
+                                <div class="folio-info">
+                                    <h3>Le 13 Janvier 2018</h3>
+                                    <p>Rembouillet, France</p>
+                                </div>
+                                <div class="folio-overview">
+                                    <span class="folio-link"><a class="folio-read-more" href="#" data-single_url=" " ><i class="fa fa-link"></i></a></span>
+                                    <span class="folio-expand"><a href="images/portfolio/image1.jpg" data-lightbox="portfolio"><i class="fa fa-search-plus"></i></a></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="folio-item wow fadeInLeftBig" data-wow-duration="1000ms" data-wow-delay="600ms">
+                    <div class="folio-image">
+                        {% image '@AppBundle/Resources/public/images/portfolio/image3.jpg'
+                        output='/images/image3.jpg' %}
+                        <img src="{{ asset_url }}" alt=""/>
+                        {% endimage %}
+                    </div>
+                    <div class="overlay">
+                        <div class="overlay-content">
+                            <div class="overlay-text">
+                                <div class="folio-info">
+                                    <h3>Le 13 Janvier 2018</h3>
+                                    <p>Marne la vallée, France</p>
+                                </div>
+                                <div class="folio-overview">
+                                    <span class="folio-link"><a class="folio-read-more" href="#" data-single_url=" " ><i class="fa fa-link"></i></a></span>
+                                    <span class="folio-expand"><a href="images/portfolio/image3.jpg" data-lightbox="portfolio"><i class="fa fa-search-plus"></i></a></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="portfolio-single-wrap">
+                <div id="portfolio-single">
+                </div>
+            </div><!-- /#portfolio-single-wrap -->
+</section><!--/#portfolio-->
+
+<section id="team">
+    <div class="container">
+        <div class="row">
+            <div class="heading text-center col-sm-8 col-sm-offset-2 wow fadeInUp" data-wow-duration="1200ms" data-wow-delay="300ms">
+                <h2>Notre équipe</h2>
+                <p>Retrouvez ci-dessous certains membres de notre équipe, prêts à vous servir !</p>
+            </div>
+        </div>
+        <div class="team-members">
+            <div class="row">
+                <div class="col-sm-3">
+                    <div class="team-member wow flipInY" data-wow-duration="1000ms" data-wow-delay="300ms">
+                        <div class="member-image">
+                            {% image '@AppBundle/Resources/public/images/team/chauffeur.png'
+                            output='/images/team/chauffeur.png' %}
+                            <img src="{{ asset_url }}" alt=""/>
+                            {% endimage %}
+
+                        </div>
+                        <div class="member-info">
+                            <h3>Le Plan Dhaou</h3>
+                            <h4>PDG &amp; Directeur</h4>
+                            <p>Chauffeur en île de france</p>
+                        </div>
+                        <div class="social-icons">
+                            <ul>
+                                <li><a class="facebook" href="#"><i class="fa fa-facebook"></i></a></li>
+                                <li><a class="twitter" href="#"><i class="fa fa-twitter"></i></a></li>
+                                <li><a class="linkedin" href="#"><i class="fa fa-linkedin"></i></a></li>
+                                <li><a class="dribbble" href="#"><i class="fa fa-dribbble"></i></a></li>
+                                <li><a class="rss" href="#"><i class="fa fa-rss"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="team-member wow flipInY" data-wow-duration="1000ms" data-wow-delay="500ms">
+                        <div class="member-image">
+                            <img class="img-responsive" src="images/team/chauffeur.png" alt="">
+                        </div>
+                        <div class="member-info">
+                            <h3>Maher Ayeb</h3>
+                            <h4>Chauffeur</h4>
+                            <p>Chauffeur en île de france</p>
+                        </div>
+                        <div class="social-icons">
+                            <ul>
+                                <li><a class="facebook" href="#"><i class="fa fa-facebook"></i></a></li>
+                                <li><a class="twitter" href="#"><i class="fa fa-twitter"></i></a></li>
+                                <li><a class="linkedin" href="#"><i class="fa fa-linkedin"></i></a></li>
+                                <li><a class="dribbble" href="#"><i class="fa fa-dribbble"></i></a></li>
+                                <li><a class="rss" href="#"><i class="fa fa-rss"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="team-member wow flipInY" data-wow-duration="1000ms" data-wow-delay="800ms">
+                        <div class="member-image">
+                            <img class="img-responsive" src="images/team/chauffeur.png" alt="">
+                        </div>
+                        <div class="member-info">
+                            <h3>Said</h3>
+                            <h4>Developpeur</h4>
+                            <p>Concepteur de l'application web</p>
+                        </div>
+                        <div class="social-icons">
+                            <ul>
+                                <li><a class="facebook" href="#"><i class="fa fa-facebook"></i></a></li>
+                                <li><a class="twitter" href="#"><i class="fa fa-twitter"></i></a></li>
+                                <li><a class="linkedin" href="#"><i class="fa fa-linkedin"></i></a></li>
+                                <li><a class="dribbble" href="#"><i class="fa fa-dribbble"></i></a></li>
+                                <li><a class="rss" href="#"><i class="fa fa-rss"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="team-member wow flipInY" data-wow-duration="1000ms" data-wow-delay="1100ms">
+                        <div class="member-image">
+                            <img class="img-responsive" src="images/team/chauffeur.png" alt="">
+                        </div>
+                        <div class="member-info">
+                            <h3>Un tunisien</h3>
+                            <h4>Chauffeur</h4>
+                            <p>Chauffeur en île de france</p>
+                        </div>
+                        <div class="social-icons">
+                            <ul>
+                                <li><a class="facebook" href="#"><i class="fa fa-facebook"></i></a></li>
+                                <li><a class="twitter" href="#"><i class="fa fa-twitter"></i></a></li>
+                                <li><a class="linkedin" href="#"><i class="fa fa-linkedin"></i></a></li>
+                                <li><a class="dribbble" href="#"><i class="fa fa-dribbble"></i></a></li>
+                                <li><a class="rss" href="#"><i class="fa fa-rss"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section><!--/#team-->
+
+<section id="features" class="parallax">
+    <div class="container">
+        <div class="row count">
+            <div class="col-sm-3 col-xs-6 wow fadeInLeft" data-wow-duration="1000ms" data-wow-delay="300ms">
+                <i class="fa fa-user"></i>
+                <h3 class="timer">4000</h3>
+                <p>Clients Satisfaits</p>
+            </div>
+            <div class="col-sm-3 col-xs-6 wow fadeInLeft" data-wow-duration="1000ms" data-wow-delay="500ms">
+                <i class="fa fa-desktop"></i>
+                <h3 class="timer">2930200</h3>
+                <p>Visiteurs</p>
+            </div>
+            <div class="col-sm-3 col-xs-6 wow fadeInLeft" data-wow-duration="1000ms" data-wow-delay="700ms">
+                <i class="fa fa-trophy"></i>
+                <h3 class="timer">10</h3>
+                <p>Meilleur VTC</p>
+            </div>
+            <div class="col-sm-3 col-xs-6 wow fadeInLeft" data-wow-duration="1000ms" data-wow-delay="900ms">
+                <i class="fa fa-comment-o"></i>
+                <h3>24h/24 7j/7</h3>
+                <p>Service rapide !</p>
+            </div>
+        </div>
+    </div>
+</section><!--/#features-->
+
+<section id="pricing">
+    <div class="container">
+        <div class="row">
+            <div class="heading text-center col-sm-8 col-sm-offset-2 wow fadeInUp" data-wow-duration="1200ms" data-wow-delay="300ms">
+                <h2>Prix des forfaits</h2>
+                <p>Profitez de nos forfaits à petit prix, parc de loisirs, aéroport, gares. N'attendez plus pour réserver !</p>
+            </div>
+        </div>
+        <div class="pricing-table">
+            <div class="row">
+                <div class="col-sm-3">
+                    <div class="single-table wow flipInY" data-wow-duration="1000ms" data-wow-delay="300ms">
+                        <h3>Paris - Aéroport Orly <img src="images/fl.jpg"/></h3>
+                        <div class="price">
+                            39€<span>/course</span>
+                        </div>
+                        <ul>
+                            <li>Eau</li>
+                            <li>Dépose minute</li>
+                            <li>4 bagages max</li>
+                            <li>4 pers. max</li>
+                            <li>Pancarte</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="single-table featured wow flipInY" data-wow-duration="1000ms" data-wow-delay="800ms">
+                        <h3>Paris - Aéroport CDC
+                            {% image '@AppBundle/Resources/public/images/fl2.jpg'
+                            output='/images/f12.jpg' %}
+                            <img src="{{ asset_url }}" alt=""/>
+                            {% endimage %}
+                            </h3>
+                        <div class="price">
+                            49€<span>/Course</span>
+                        </div>
+                        <ul>
+                            <li>Eau</li>
+                            <li>Dépose minute</li>
+                            <li>4 bagages max</li>
+                            <li>4 pers. max</li>
+                            <li>Pancarte</li>
+
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="single-table wow flipInY" data-wow-duration="1000ms" data-wow-delay="500ms">
+                        <h3>Paris - Aéroport Le Bourget
+                            {% image '@AppBundle/Resources/public/images/fl.jpg'
+                            output='/images/fl.jpg' %}
+                            <img src="{{ asset_url }}" alt=""/>
+                            {% endimage %}
+                            </h3>
+                        <div class="price">
+                            59€<span>/Course</span>
+                        </div>
+                        <ul>
+                            <li>Eau</li>
+                            <li>Dépose minute</li>
+                            <li>4 bagages max</li>
+                            <li>4 pers. max</li>
+                            <li>Pancarte</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-sm-3">
+                    <div class="single-table wow flipInY" data-wow-duration="1000ms" data-wow-delay="500ms">
+                        <h3>Paris - Aéroport Beauvais
+                            {% image '@AppBundle/Resources/public/images/fl.jpg'
+                            output='/images/fl.jpg' %}
+                            <img src="{{ asset_url }}" alt=""/>
+                            {% endimage %}
+                            </h3>
+                        <div class="price">
+                            119€<span>/Course</span>
+                        </div>
+                        <ul>
+                            <li>Eau</li>
+                            <li>Dépose minute</li>
+                            <li>4 bagages max</li>
+                            <li>4 pers. max</li>
+                            <li>Pancarte</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+
+        <div class="pricing-table">
+            <div class="row">
+                <div class="col-sm-3">
+                    <div class="single-table featured wow flipInY" data-wow-duration="1000ms" data-wow-delay="800ms">
+                        <h3>Paris - DisneyLand
+                            {% image '@AppBundle/Resources/public/images/fl2.jpg'
+                            output='/images/fl2.jpg' %}
+                            <img src="{{ asset_url }}" alt=""/>
+                            {% endimage %}
+                            </h3>
+                        <div class="price">
+                            49€<span>/Course</span>
+                        </div>
+                        <ul>
+                            <li>Eau</li>
+                            <li>Parking</li>
+                            <li>4 pers. max</li>
+
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="single-table wow flipInY" data-wow-duration="1000ms" data-wow-delay="300ms">
+                        <h3>Paris - Parc Astérix
+                            {% image '@AppBundle/Resources/public/images/fl.jpg'
+                            output='/images/fl.jpg' %}
+                            <img src="{{ asset_url }}" alt=""/>
+                            {% endimage %}</h3>
+                        <div class="price">
+                            49€<span>/course</span>
+                        </div>
+                        <ul>
+                            <li>Eau</li>
+                            <li>Parking</li>
+                            <li>4 pers. max</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-sm-3">
+                    <div class="single-table wow flipInY" data-wow-duration="1000ms" data-wow-delay="500ms">
+                        <h3>Paris - Versailles
+                            {% image '@AppBundle/Resources/public/images/fl.jpg'
+                            output='/images/fl.jpg' %}
+                            <img src="{{ asset_url }}" alt=""/>
+                            {% endimage %}
+                            </h3>
+                        <div class="price">
+                            68€<span>/Course</span>
+                        </div>
+                        <ul>
+                            <li>Eau</li>
+                            <li>Parking</li>
+                            <li>4 pers. max</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-sm-3">
+                    <div class="single-table wow flipInY" data-wow-duration="1000ms" data-wow-delay="500ms">
+                        <h3>Paris - Fontainebleau
+                            {% image '@AppBundle/Resources/public/images/fl.jpg'
+                            output='/images/fl.jpg' %}
+                            <img src="{{ asset_url }}" alt=""/>
+                            {% endimage %}
+                            </h3>
+                        <div class="price">
+                            115€<span>/Course</span>
+                        </div>
+                        <ul>
+                            <li>Eau</li>
+                            <li>Parking</li>
+                            <li>4 pers. max</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section><!--/#pricing-->
+
+<section id="twitter" class="parallax">
+    <div>
+        <a class="twitter-left-control" href="#twitter-carousel" role="button" data-slide="prev"><i class="fa fa-angle-left"></i></a>
+        <a class="twitter-right-control" href="#twitter-carousel" role="button" data-slide="next"><i class="fa fa-angle-right"></i></a>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-8 col-sm-offset-2">
+                    <div class="twitter-icon text-center">
+                        <i class="fa fa-twitter"></i>
+                        <h4>Suivez-nous sur Twitter</h4>
+                    </div>
+                    <div id="twitter-carousel" class="carousel slide" data-ride="carousel">
+                        <div class="carousel-inner">
+                            <div class="item active wow fadeIn" data-wow-duration="1000ms" data-wow-delay="300ms">
+                                <p>De nouveaux articles toutes les semaines ! <a href="#"><span>#articlesreserverunvtc</span> www.reserverunvtc.com/articles</a></p>
+                            </div>
+                            <div class="item">
+                                <p>De nouveaux articles toutes les semaines ! <a href="#"><span>#articlesreserverunvtc</span> www.reserverunvtc.com/articles</a></p>
+                            </div>
+                            <div class="item">
+                                <p>De nouveaux articles toutes les semaines ! <a href="#"><span>#articlesreserverunvtc</span> www.reserverunvtc.com/articles</a></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section><!--/#twitter-->
+
+
+<section id="contact">
+    <div id="google-map" class="wow fadeIn" data-latitude="48.7461849" data-longitude="2.4921540000000277" data-wow-duration="1000ms" data-wow-delay="400ms"></div>
+    <div id="contact-us" class="parallax">
+        <div class="container">
+            <div class="row">
+                <div class="heading text-center col-sm-8 col-sm-offset-2 wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="300ms">
+                    <h2>Contactez-Nous</h2>
+                    <p>Pour nous contacter, il vous suffit de remplir le formulaire ci-dessous et de nous le transmettre en validant.</p>
+                </div>
+            </div>
+
+            <div class="contact-form wow fadeIn" data-wow-duration="1000ms" data-wow-delay="600ms">
+                <div class="row">
+                    <div class="col-sm-6">
+                        {% if message_page["contact_success"] is defined %}
+                            <div class="alert alert-sucess" role="alert">
+                                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                {{ message_page["contact_success"] }}
+                            </div>
+                        {%  endif  %}
+                        {{ form_start(form_contact) }}
+
+                        <form id="main-contact-form" name="contact-form" method="post" action="/">
+                            <div class="row  wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="300ms">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        {{ form_errors(form_contact.nom) }}
+                                        {{ form_widget(form_contact.nom, {'attr': { 'placeholder': 'Nom' , 'required' : 'required' ,  'class': 'form-control'}}) }}
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        {{ form_errors(form_contact.mail) }}
+                                        {{ form_widget(form_contact.mail, {'attr': { 'placeholder': 'Mail' , 'required' : 'required' ,  'class': 'form-control'}}) }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                {{ form_errors(form_contact.message) }}
+                                {{ form_widget(form_contact.message, {'attr': { 'placeholder': 'Votre message' , 'required' : 'required' ,  'class': 'form-control'}}) }}
+                            </div>
+                            <div class="form-group">
+                                {{ form_widget(form_contact.submit, { 'label': 'Envoyer'  , 'attr': { 'class': 'btn btn-primary'} } ) }}
+                            </div>
+                            {{ form_end(form_contact) }}
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="contact-info wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="300ms">
+                            <p>ReserverUnVtc est disponible 24h/24, 7j/7. Voici nos coordonnées ci-dessous</p>
+                            <ul class="address">
+                                <li><i class="fa fa-map-marker"></i> <span> Adresse:</span><br/> ReserverUnVtc, 20 rue John Perse,<br/> 94450 Limeil-Brévannes, France </li>
+                                <li><i class="fa fa-phone"></i> <span> Phone:</span> 06 59 56 63 83  </li>
+                                <li><i class="fa fa-envelope"></i> <span> Email:</span><a href="mailto:contact@reserverunvtc.com"> contact@reserverunvtc.com</a></li>
+                                <li><i class="fa fa-globe"></i> <span> Site:</span> <a href="#">www.reserverunvtc.com</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section><!--/#contact-->
+<footer id="footer">
+    <div class="footer-top wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="300ms">
+        <div class="container text-center">
+            <div class="footer-logo">
+                <a href="index.html">
+                    {% image '@AppBundle/Resources/public/images/logo.png'
+                    output='/images/logo.png' %}
+                    <img src="{{ asset_url }}" alt=""/>
+                    {% endimage %}
+                </a>
+            </div>
+            <div class="social-icons">
+                <ul>
+                    <li><a class="envelope" href="#"><i class="fa fa-envelope"></i></a></li>
+                    <li><a class="twitter" href="#"><i class="fa fa-twitter"></i></a></li>
+                    <li><a class="dribbble" href="#"><i class="fa fa-dribbble"></i></a></li>
+                    <li><a class="facebook" href="#"><i class="fa fa-facebook"></i></a></li>
+                    <li><a class="linkedin" href="#"><i class="fa fa-linkedin"></i></a></li>
+                    <li><a class="tumblr" href="#"><i class="fa fa-tumblr-square"></i></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6">
+                    <p>&copy; 2018 ReserverUnVtc. Tout droits réservés.</p>
+                </div>
+                <div class="col-sm-6">
+                    <p class="pull-right"> <a href="mentionslegales.html">Mentions légales</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+<!-- Modal -->
+<div class="modal fade" id="modalFormErrors" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Erreur dans le formulaire</h4>
+            </div>
+            <div class="modal-body">
+                <p   id="errorsFormP"></p>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" id="closeModalErrorsButton" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+<script>
+
+
+    function checkErrorForm() {
+
+        var depart = $("#appbundle_devis_depart").val();
+        var arrive = $("#appbundle_devis_arrive").val();
+        var date = $("#appbundle_devis_datePrevu").val();
+        var personne = $("#appbundle_devis_nbPersonne").val();
+        var bagage = $("#appbundle_devis_nbBagage").val();
+
+         $.post(  Routing.generate("errorsFormReservation" , { depart: depart , arrive: arrive, date:date , personne: personne, bagage: bagage }) , function (retour) {
+
+
+             if( retour == "OK")
+             {
+                 document.getElementById("appbundleid_devis").submit();
+             }
+             else{
+                 var errors = JSON.parse(retour);
+                 var content = "<ul class='list-group'>";
+
+
+                 errors.forEach(function(e){
+                     content += '<li class="list-group-item">'+e+'</li>';
+                 });
+                 content += "</ul>";
+                 $("#errorsFormP").html(content);
+                 $("#modalFormErrors").modal('show');
+             }
+         });
+         return false;
+    }
+    
+</script>
+
+<script>
+    var map;
+    function initMap() {
+        map = new google.maps.Map(document.getElementById('google-map'), {
+            center: {lat: -34.397, lng: 150.644},
+            zoom: 8
+        });
+        initAutocomplete();
+    }
+
+</script>
+<script>
+    // This example displays an address form, using the autocomplete feature
+    // of the Google Places API to help users fill in the information.
+
+    // This example requires the Places library. Include the libraries=places
+    // parameter when you first load the API. For example:
+    // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
+
+    var placeSearch, autocomplete;
+    var componentForm = {
+        street_number: 'short_name',
+        route: 'long_name',
+        locality: 'long_name',
+        administrative_area_level_1: 'short_name',
+        country: 'long_name',
+        postal_code: 'short_name'
+    };
+
+    function initAutocomplete() {
+        // Create the autocomplete object, restricting the search to geographical
+        // location types.
+        autocomplete = new google.maps.places.Autocomplete(
+            /** @type {!HTMLInputElement} */(document.getElementById('appbundle_devis_depart')),
+            {types: ['geocode']});
+
+        autocomplete_2 = new google.maps.places.Autocomplete(
+            /** @type {!HTMLInputElement} */(document.getElementById('appbundle_devis_arrive')),
+            {types: ['geocode']});
+
+        // When the user selects an address from the dropdown, populate the address
+        // fields in the form.
+        //autocomplete.addListener('place_changed', fillInAddress);
+        //autocomplete_2.addListener('place_changed', fillInAddress);
+    }
+
+</script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCrEfQ8dj-0qJ9jAruwxWV06qKR8dfupXk&libraries=places&callback=initMap"
+        async defer></script>
+{% javascripts
+'@AppBundle/Resources/public/js/jquery.js'
+'@AppBundle/Resources/public/js/bootstrap.min.js'
+'@AppBundle/Resources/public/js/jquery.inview.min.js'
+'@AppBundle/Resources/public/js/wow.min.js'
+'@AppBundle/Resources/public/js/mousescroll.js'
+'@AppBundle/Resources/public/js/smoothscroll.js'
+'@AppBundle/Resources/public/js/jquery.countTo.js'
+'@AppBundle/Resources/public/js/lightbox.min.js'
+'@AppBundle/Resources/public/js/main.js'
+%}
+<script src="{{ asset_url }}"></script>
+{% endjavascripts %}
+
+{% javascripts
+'../vendor/components/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js'
+'../vendor/components/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.fr.js'
+%}
+<script src="{{ asset_url }}"></script>
+{% endjavascripts %}
+
+<script>
+    $('.datepickerPrevu').datetimepicker({
+        language: 'fr',
+        startDate: '-0d'
+    });
+
+</script>
+
+</body>
+</html>

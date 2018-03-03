@@ -1,0 +1,130 @@
+{% include 'AppBundle:Default:header.html.twig' %}
+<!-- Button trigger modal -->
+
+<style>
+    #reservation{
+        width: 1000px;
+        margin: auto;
+        margin-top: 20px;
+    }
+    #content-1 {
+        width: 215px;
+        display: inline-block;
+        vertical-align: top;
+        margin-left: 40px;
+    }
+    #content-2{
+        width: 215px;
+        display: inline-block;
+        vertical-align: top;
+    }
+</style>
+
+
+<body>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCrEfQ8dj-0qJ9jAruwxWV06qKR8dfupXk&libraries=places"
+        async defer></script>
+
+{% javascripts
+'@AppBundle/Resources/public/js/jquery.js'
+'@AppBundle/Resources/public/js/bootstrap.min.js'
+'@AppBundle/Resources/public/js/jquery.inview.min.js'
+'@AppBundle/Resources/public/js/wow.min.js'
+'@AppBundle/Resources/public/js/mousescroll.js'
+'@AppBundle/Resources/public/js/smoothscroll.js'
+'@AppBundle/Resources/public/js/jquery.countTo.js'
+'@AppBundle/Resources/public/js/lightbox.min.js'
+%}
+<script src="{{ asset_url }}"></script>
+{% endjavascripts %}
+
+{% javascripts
+'../vendor/components/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js'
+'../vendor/components/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.fr.js'
+%}
+<script src="{{ asset_url }}"></script>
+{% endjavascripts %}
+
+
+{% include 'AppBundle:Default:menu.html.twig' %}
+
+
+
+<div id="reservation" class="panel panel-default" style="width: 800px;padding-left: 15px;padding-right: 15px;padding-bottom: 10px;">
+    <div class="panel-body">
+        <div class="panel panel-default" style="width: 500px;height:50px;margin-left: 130px;margin-bottom: 20px;">
+            <div class="panel-body">
+                <center><strong>Récapitulatif de la commande</strong></center>
+            </div>
+        </div>
+        <div id="content-1">
+
+            <div class="form-group row" style="margin-bottom: 5px;">
+                <h5><strong>Départ</strong></h5>
+                <div class="col-sm-10">
+                    {{  reservation.depart }}
+                </div>
+            </div>
+            <div class="form-group row" style="margin-bottom: 5px;">
+                <h5><strong>Arrivé</strong></h5>
+                <div class="col-sm-10">
+                    {{  reservation.arrive }}
+                </div>
+            </div>
+
+
+        </div>
+        <div id="content-2">
+            <div class="form-group row" style="margin-bottom: 5px;">
+                <h5><strong>Date</strong></h5>
+                <div class="col-sm-10">
+                    {{  reservation.datePrevu|date('d-m-Y') }}
+                </div>
+            </div>
+            <div class="form-group row" style="margin-bottom: 5px;">
+                <h5><strong>Durée estimée</strong></h5>
+                <div class="col-sm-10">
+                    {{  infoDrive[0][1]|number_format(0, '.', ',') }} minutes
+                </div>
+            </div>
+
+            <div class="form-group row" style="margin-bottom: 5px;">
+                <h5><strong>Nombre de personne</strong></h5>
+                <div class="col-sm-10">
+                    {{  reservation.nbPersonne }}
+                </div>
+            </div>
+
+        </div>
+
+        <div id="content-2">
+            <div class="form-group row" style="margin-bottom: 5px;">
+                <h5><strong>Distance</strong></h5>
+                <div class="col-sm-10">
+                    {{ infoDrive[1][0]  }}
+                </div>
+            </div>
+            <div class="form-group row" style="margin-bottom: 5px;">
+                <h5><strong>Prix</strong></h5>
+                <div class="col-sm-10">
+                    {{ infoDrive[2]|number_format(2, '.', ',')  }} euros
+                </div>
+            </div>
+            <div class="form-group row" style="margin-bottom: 5px;">
+                <h5><strong>Nombre de Bagage</strong></h5>
+                <div class="col-sm-10">
+                    {{  reservation.nbBagage }}
+                </div>
+            </div>
+        </div>
+
+        <div  class="alert alert-success" role="alert" style="margin-bottom: 10px;">
+            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+            L'équipe vous remercie pour votre confiance
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>

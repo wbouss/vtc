@@ -1,0 +1,17 @@
+
+Bonjour,
+
+Une nouvelle reservation vient d'être emise. Le récapitulatif ci-dessous. <br><br>
+
+Départ: {{ reservation.depart }}<br>
+Arrivé: {{ reservation.arrive }}<br>
+Durée: {{ reservation.duree }}<br>
+Distance: {{ reservation.distance }}<br>
+Date: {{ reservation.date|date("d-m-Y H:i") }}<br>
+Date prévu: {{ reservation.datePrevu|date("d-m-Y H:i") }}<br>
+Nombre de bagage: {{ reservation.nbBagage }}<br>
+Nombre de personne: {{ reservation.nbPersonne }}<br>
+Prix: {{ reservation.prix }}<br>
+{% if reservation.user.lastName is defined %}
+    Client: {{ reservation.user.lastName }}
+{% endif %}

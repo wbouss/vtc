@@ -1,0 +1,262 @@
+{% include 'AppBundle:Default:header.html.twig' %}
+<!-- Button trigger modal -->
+
+<style>
+    #reservation{
+        width: 1000px;
+        margin: auto;
+        margin-top: 20px;
+    }
+    #content-1 {
+        width: 215px;
+        display: inline-block;
+        vertical-align: top;
+        margin-left: 40px;
+     }
+     #content-2{
+        width: 215px;
+        display: inline-block;
+        vertical-align: top;
+    }
+</style>
+
+
+<body>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCrEfQ8dj-0qJ9jAruwxWV06qKR8dfupXk&libraries=places"
+        async defer></script>
+
+{% javascripts
+'@AppBundle/Resources/public/js/jquery.js'
+'@AppBundle/Resources/public/js/bootstrap.min.js'
+'@AppBundle/Resources/public/js/jquery.inview.min.js'
+'@AppBundle/Resources/public/js/wow.min.js'
+'@AppBundle/Resources/public/js/mousescroll.js'
+'@AppBundle/Resources/public/js/smoothscroll.js'
+'@AppBundle/Resources/public/js/jquery.countTo.js'
+'@AppBundle/Resources/public/js/lightbox.min.js'
+%}
+<script src="{{ asset_url }}"></script>
+{% endjavascripts %}
+
+{% javascripts
+'../vendor/components/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js'
+'../vendor/components/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.fr.js'
+%}
+<script src="{{ asset_url }}"></script>
+{% endjavascripts %}
+
+
+{% include 'AppBundle:Default:menu.html.twig' %}
+
+
+
+    <div id="reservation" class="panel panel-default" style="width: 800px;padding-left: 15px;padding-right: 15px;padding-bottom: 10px;">
+        <div class="panel-body">
+            <div class="panel panel-default" style="width: 500px;height:50px;margin-left: 130px;margin-bottom: 20px;">
+                <div class="panel-body">
+                    <center><strong>Plan</strong></center>
+                </div>
+            </div>
+            <div id="warnings-panel"><b>Le calcul d'itinéraires piétons</b></div>
+            <div id="googlemap"  style="height: 250px;margin-bottom: 20px;margin-bottom: 20px;" ></div>
+
+            <div class="panel panel-default" style="width: 500px;height:50px;margin-left: 130px;margin-bottom: 20px;">
+                <div class="panel-body">
+                    <center><strong>Estimation</strong></center>
+                </div>
+            </div>
+            <div id="content-1">
+
+                <div class="form-group row" style="margin-bottom: 5px;">
+                    <h5><strong>Départ</strong></h5>
+                    <div class="col-sm-10">
+                        {{  devis.depart }}
+                    </div>
+                </div>
+                <div class="form-group row" style="margin-bottom: 5px;">
+                    <h5><strong>Arrivé</strong></h5>
+                    <div class="col-sm-10">
+                        {{  devis.arrive }}
+                    </div>
+                </div>
+
+
+            </div>
+            <div id="content-2">
+                <div class="form-group row" style="margin-bottom: 5px;">
+                    <h5><strong>Date</strong></h5>
+                    <div class="col-sm-10">
+                        {{  devis.datePrevu|date('d-m-Y') }}
+                    </div>
+                </div>
+                <div class="form-group row" style="margin-bottom: 5px;">
+                    <h5><strong>Durée estimée</strong></h5>
+                    <div class="col-sm-10">
+                        {{  infoDrive[0][1]|number_format(0, '.', ',') }} minutes
+                    </div>
+                </div>
+
+                <div class="form-group row" style="margin-bottom: 5px;">
+                    <h5><strong>Nombre de personne</strong></h5>
+                    <div class="col-sm-10">
+                        {{  devis.nbPersonne }}
+                    </div>
+                </div>
+
+            </div>
+
+            <div id="content-2">
+                <div class="form-group row" style="margin-bottom: 5px;">
+                    <h5><strong>Distance</strong></h5>
+                    <div class="col-sm-10">
+                        {{ infoDrive[1][0]  }}
+                    </div>
+                </div>
+                <div class="form-group row" style="margin-bottom: 5px;">
+                    <h5><strong>Prix</strong></h5>
+                    <div class="col-sm-10">
+                        {{ infoDrive[2]|number_format(2, '.', ',')  }} euros
+                    </div>
+                </div>
+                <div class="form-group row" style="margin-bottom: 5px;">
+                    <h5><strong>Nombre de Bagage</strong></h5>
+                    <div class="col-sm-10">
+                        {{  devis.nbBagage }}
+                    </div>
+                </div>
+                <button type="button" style="float: right;border-radius: 4px;" class="btn btn-warning"   onclick="location.href='{{ path("homepage") }}#services'">Modifier la recherche</button>
+            </div>
+
+            <hr>
+            <center>
+                {% if is_granted("ROLE_USER") %}
+                    <form style="display: inline-block;" action="{{path("reserver",  {"devisKey":  devisKey , "infoDrive" :  infoDrive }) }}" method="POST">
+                        <script
+                                src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                                data-key="pk_test_QDRpNiZyOSQY3vPT4UKN0A8Y"
+                                data-amount="{{ infoDrive[2] *100 }}"
+                                data-name="Paiement de la reservation"
+                                data-description="Widget"
+                                data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+                                data-locale="auto"
+                                data-label="Paiement par carte bancaire"
+                                data-zip-code="true"
+                                data-currency="eur">
+                        </script>
+                    </form>
+                {% else %}
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#loginModal">Se connecter pour réserver</button>
+
+                {% endif %}
+            </center>
+        </div>
+    </div>
+
+<!-- Modal login -->
+<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document" style="width: 400px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="loginodalLabel">Connexion</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <center>
+                    <iframe id="iframeLogin" style="width: 320px;border:none" src="{{ path("fos_user_security_login") }}"></iframe>
+                </center>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id="buttonFermer" data-dismiss="modal">Fermer</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+
+    $("#iframeLogin").on('load', function () {
+        var element_iframe = $('#iframeLogin').contents().height();
+        $("#iframeLogin").height(element_iframe);
+    });
+
+
+
+    $( document ).ready(function() {
+        $('#loginModal').on('hidden.bs.modal', function () {
+            var connect =  $("#iframeLogin").contents().find("#jsuser").attr("data-is-authenticated");
+            if( connect == "true" )
+                location.reload();
+        });
+    });
+
+
+
+</script>
+<script>
+    $('.datepickerPrevu').datetimepicker({
+        language: 'fr'
+    });
+</script>
+
+<script>
+    var map;
+    var directionsDisplay;
+    var directionsService;
+    var stepDisplay;
+    var markerArray = [];
+
+    directionsService = new google.maps.DirectionsService();
+    var manhattan = new google.maps.LatLng(40.7711329, -73.9741874);
+
+    var mapOptions = {
+        zoom: 13,
+        center: manhattan
+    }
+
+    map = new google.maps.Map(document.getElementById('googlemap'), mapOptions);
+
+    for (i = 0; i < markerArray.length; i++) {
+        markerArray[i].setMap(null);
+    }
+
+    // Create a renderer for directions and bind it to the map.
+    var directionsDisplay = new google.maps.DirectionsRenderer({map: map});
+
+
+    var start = '{{ devis.depart }}';
+    var end = '{{ devis.arrive }}';
+    var request = {
+        origin: start,
+        destination: end,
+        travelMode: 'DRIVING'
+    };
+
+    // Route the directions and pass the response to a
+    // function to create markers for each step.
+
+    directionsService.route(request, function(response, status) {
+
+        if (status == "OK") {
+            var warnings = document.getElementById("warnings-panel");
+            warnings.innerHTML = "" + response.routes[0].warnings + "";
+            directionsDisplay.setDirections(response);
+        }
+    });
+
+
+    function attachInstructionText(marker, text) {
+        google.maps.event.addListener(marker, 'click', function() {
+            stepDisplay.setContent(text);
+            stepDisplay.open(map, marker);
+        });
+    }
+</script>
+
+
+</body>
+</html>

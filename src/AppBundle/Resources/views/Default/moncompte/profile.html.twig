@@ -1,0 +1,65 @@
+{% include 'AppBundle:Default:header.html.twig' %}
+<style>
+    #moncompte{
+        width: 1000px;
+        margin: auto;
+        margin-top: 20px;
+    }
+
+</style>
+
+<body>
+
+{% javascripts
+'@AppBundle/Resources/public/js/jquery.js'
+'@AppBundle/Resources/public/js/bootstrap.min.js'
+'@AppBundle/Resources/public/js/jquery.inview.min.js'
+'@AppBundle/Resources/public/js/wow.min.js'
+'@AppBundle/Resources/public/js/mousescroll.js'
+'@AppBundle/Resources/public/js/smoothscroll.js'
+'@AppBundle/Resources/public/js/jquery.countTo.js'
+'@AppBundle/Resources/public/js/lightbox.min.js'
+%}
+<script src="{{ asset_url }}"></script>
+{% endjavascripts %}
+
+{% javascripts
+'../vendor/components/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js'
+'../vendor/components/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.fr.js'
+%}
+<script src="{{ asset_url }}"></script>
+{% endjavascripts %}
+
+{% include 'AppBundle:Default:menu.html.twig' %}
+
+{% if is_granted('ROLE_USER') %}
+    <div id="moncompte">
+        <button style="margin-left: 190px;border-radius: 5px;" onClick="location.href = '{{ path('fos_user_security_logout') }}'" type="button" class="btn btn-danger">Se déconnecter </button>
+        <center>
+            <iframe id="iframeprofile" style="width: 650px;border:none" src="useredit" data-retour="{{ path("moncompte_profile") }}"></iframe>
+        </center>
+    </div>
+{%  else  %}
+    <div id="moncompte">
+        <center>
+            <iframe id="iframelogin" style="width: 650px;border:none" src="login" data-retour="{{ path("moncompte_profile") }}"></iframe>
+        </center>
+    </div>
+{%  endif  %}
+
+
+<script>
+    $("#iframeprofile").on('load', function () {
+        var element_iframe = $('#iframeprofile').contents().height();
+        $("#iframeprofile").height(element_iframe);
+    });
+
+    $("#iframelogin").on('load', function () {
+        var element_iframe = $('#iframelogin').contents().height();
+        $("#iframelogin").height(element_iframe);
+    });
+
+</script>
+
+</body>
+</html>

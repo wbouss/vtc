@@ -1,0 +1,14 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+<form action="{{ path('usercustom_sendemail_password') }}" method="POST" class="fos_user_resetting_request">
+
+    <div class="form-group">
+        <div>
+            <label for="username">{{ 'resetting.request.username'|trans }}</label>
+            <input type="text" id="username" name="username" required="required" style="width: 250px;" />
+        </div>
+    </div>
+    <div>
+        <input type="submit" class="btn btn-primary" value="{{ 'resetting.request.submit'|trans }}"  onclick="faire()" style="width: 250px;" />
+    </div>
+</form>

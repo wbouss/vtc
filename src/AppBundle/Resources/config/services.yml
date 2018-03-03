@@ -1,0 +1,27 @@
+services:
+    app.admin.user:
+        class: AppBundle\Admin\UserAdmin
+        arguments: [~, AppBundle\Entity\User, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: User  }
+
+    app.admin.contact:
+        class: AppBundle\Admin\ContactAdmin
+        arguments: [~, AppBundle\Entity\Contact, AppBundle:ContactAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Contact }
+        public: true
+
+    app.admin.reservation:
+        class: AppBundle\Admin\ReservationAdmin
+        arguments: [~, AppBundle\Entity\Reservation, AppBundle:ReservationAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Reservation }
+        public: true
+
+    app.admin.parametre:
+        class: AppBundle\Admin\ParametreAdmin
+        arguments: [~, AppBundle\Entity\Parametre, AppBundle:ParametreAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Parametre }
+        public: true

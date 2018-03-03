@@ -1,0 +1,60 @@
+{% include 'AppBundle:Default:header.html.twig' %}
+<style>
+    #moncompte{
+        width: 1000px;
+        margin: auto;
+        margin-top: 20px;
+    }
+
+</style>
+
+<body>
+
+{% javascripts
+'@AppBundle/Resources/public/js/jquery.js'
+'@AppBundle/Resources/public/js/bootstrap.min.js'
+'@AppBundle/Resources/public/js/jquery.inview.min.js'
+'@AppBundle/Resources/public/js/wow.min.js'
+'@AppBundle/Resources/public/js/mousescroll.js'
+'@AppBundle/Resources/public/js/smoothscroll.js'
+'@AppBundle/Resources/public/js/jquery.countTo.js'
+'@AppBundle/Resources/public/js/lightbox.min.js'
+%}
+<script src="{{ asset_url }}"></script>
+{% endjavascripts %}
+
+{% javascripts
+'../vendor/components/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js'
+'../vendor/components/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.fr.js'
+%}
+<script src="{{ asset_url }}"></script>
+{% endjavascripts %}
+
+{% include 'AppBundle:Default:menu.html.twig' %}
+
+
+<div id="moncompte">
+    {% if is_granted('ROLE_USER') %}
+        <div class="alert alert-danger" role="alert">
+            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+            <span class="sr-only">Error:</span>
+            Vous devez être déconnecté pour s'inscrire
+        </div>
+    {% else %}
+        <center>
+            <iframe id="iframeresetpassword" style="width: 500px;border:none"  src="resetting/request"></iframe>
+        </center>
+    {% endif %}
+
+</div>
+
+
+<script>
+    $("#iframeresetpassword").on('load', function () {
+        var element_iframe = $('#iframeresetpassword').contents().height();
+        $("#iframeresetpassword").height(element_iframe);
+    });
+</script>
+
+</body>
+</html>

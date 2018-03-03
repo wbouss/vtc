@@ -1,0 +1,41 @@
+app:
+    resource: "@AppBundle/Controller/"
+    type:     annotation
+
+admin:
+    resource: '@SonataAdminBundle/Resources/config/routing/sonata_admin.xml'
+    prefix: /admin
+
+_sonata_admin:
+    resource: .
+    type: sonata_admin
+    prefix: /admin
+
+
+
+fos_js_routing:
+    resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
+
+user_custom:
+    resource: "@UserCustomBundle/Controller/"
+    type:     annotation
+
+
+fos_user_security_login:
+    path: /login
+    defaults:  { _controller: UserCustomBundle:Security:login }
+
+fos_user_security_check:
+    path: /login_check
+    defaults:  { _controller: UserCustomBundle:Security:check }
+
+login_failure:
+    path: /log_fail
+    defaults:  { _controller: UserCustomBundle:Security:login }
+
+fos_user_security_logout:
+    path: /logout
+    defaults:  { _controller: UserCustomBundle:Security:logout }
+
+
+

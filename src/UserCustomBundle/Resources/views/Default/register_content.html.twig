@@ -1,0 +1,188 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+{# empty Twig template #}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>VTC</title>
+
+    <!-- css -->
+    {% stylesheets '../vendor/twbs/bootstrap/dist/css/bootstrap.min.css'  filter='cssrewrite' output='css/bootstrap.css' %}
+    <link rel='stylesheet' href='{{ asset_url }}' />
+    {% endstylesheets %}
+
+
+    {% javascripts
+    '@AppBundle//Resources/public/js/jquery.js' %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
+    {% javascripts
+    '../vendor/twbs/bootstrap/dist/js/bootstrap.min.js' %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+    <style>
+
+
+        /* Side notes for calling out things
+        -------------------------------------------------- */
+
+        /* Base styles (regardless of theme) */
+        .bs-callout {
+            margin: 20px 0;
+            padding: 15px 30px 15px 15px;
+            border-left: 5px solid #eee;
+        }
+        .bs-callout h1,
+        .bs-callout h2,
+        .bs-callout h3,
+        .bs-callout h4,
+        .bs-callout h5,
+        .bs-callout h6 {
+            margin-top: 0;
+        }
+
+        .bs-callout-danger h1,
+        .bs-callout-danger h2,
+        .bs-callout-danger h3,
+        .bs-callout-danger h4,
+        .bs-callout-danger h5,
+        .bs-callout-danger h6 {
+            color: #B94A48;
+        }
+
+        .bs-callout-warning h1,
+        .bs-callout-warning h2,
+        .bs-callout-warning h3,
+        .bs-callout-warning h4,
+        .bs-callout-warning h5,
+        .bs-callout-warning h6 {
+            color: #C09853;
+        }
+
+        .bs-callout-info h1,
+        .bs-callout-info h2,
+        .bs-callout-info h3,
+        .bs-callout-info h4,
+        .bs-callout-info h5,
+        .bs-callout-info h6 {
+            color: #3A87AD;
+        }
+
+        .bs-callout-success h1,
+        .bs-callout-success h2,
+        .bs-callout-success h3,
+        .bs-callout-success h4,
+        .bs-callout-success h5,
+        .bs-callout-success h6 {
+            color: #3C763D;
+        }
+
+        .bs-callout p:last-child {
+            margin-bottom: 0;
+        }
+
+        .bs-callout code,
+        .bs-callout .highlight {
+            background-color: #fff;
+        }
+
+        /* Themes for different contexts */
+        .bs-callout-danger {
+            background-color: #fcf2f2;
+            border-color: #dFb5b4;
+        }
+        .bs-callout-warning {
+            background-color: #fefbed;
+            border-color: #f1e7bc;
+        }
+        .bs-callout-info {
+            background-color: white;
+            border-color: #d0e3f0;
+        }
+        .bs-callout-success {
+            background-color: #dff0d8;
+            border-color: #d6e9c6;
+        }
+    </style>
+</head>
+
+<body>
+<center><h4>Création d'un nouveau compte</h4></center>
+
+{% if formRegister is defined %}
+   {% if formRegister.vars.submitted == true %}
+       <div class="alert alert-danger" role="alert">Le formulaire comporte des erreurs</div>
+       <ul>
+           {{ form_errors(formRegister.email) }}
+           {{ form_errors(formRegister.username) }}
+           {{ form_errors(formRegister.plainPassword.first) }}
+           {{ form_errors(formRegister.plainPassword.second) }}
+           {{ form_errors(formRegister.lastName) }}
+           {{ form_errors(formRegister.firstName) }}
+           {{ form_errors(formRegister.adresse) }}
+           {{ form_errors(formRegister.ville) }}
+           {{ form_errors(formRegister.codepostale) }}
+       </ul>
+   {% endif %}
+{% endif %}
+
+{{ form_start(formRegister, {'method': 'post', 'action': path('registration_register'), 'attr': {'class': 'fos_user_registration_register'}}) }}
+{# Les erreurs générales du formulaire. #}
+<center>
+<form>
+    <div style="width:  610px;">
+        <div style="display: inline-block;width:  300px;vertical-align: top">
+            <div class="form-group">
+                {{ form_label(formRegister.email, "Adresse E-mail ", {'label_attr': {}}) }}
+                {{ form_widget(formRegister.email, {'attr': {'class': 'form-control'}}) }}
+            </div>
+            <div class="form-group">
+                {{ form_label(formRegister.username, "Nom d'utilisateur ", {'label_attr': {}}) }}
+                {{ form_widget(formRegister.username, {'attr': {'class': 'form-control'}}) }}
+            </div>
+            <div class="form-group">
+                {{ form_label(formRegister.plainPassword.first, "Mot de passe", {'label_attr': {}}) }}
+                {{ form_widget(formRegister.plainPassword.first, {'attr': {'class': 'form-control'}}) }}
+            </div>
+            <div class="form-group">
+                {{ form_label(formRegister.plainPassword.second, "Confirmation de mot de passe", {'label_attr': {}}) }}
+                {{ form_widget(formRegister.plainPassword.second, {'attr': {'class': 'form-control'}}) }}
+            </div>
+            <div class="form-group">
+                {{ form_label(formRegister.lastName, "Nom", {'label_attr': {}}) }}
+                {{ form_widget(formRegister.lastName, {'attr': {'class': 'form-control'}}) }}
+            </div>
+        </div>
+        <div style="display: inline-block;width:  300px;vertical-align: top">
+
+            <div class="form-group">
+                {{ form_label(formRegister.firstName, "Prénom", {'label_attr': {}}) }}
+                {{ form_widget(formRegister.firstName, {'attr': {'class': 'form-control'}}) }}
+            </div>
+            <div class="form-group">
+                {{ form_label(formRegister.telephone, "Téléphone", {'label_attr': {}}) }}
+                {{ form_widget(formRegister.telephone, {'attr': {'class': 'form-control'}}) }}
+            </div>
+            <div class="form-group">
+                {{ form_label(formRegister.adresse, "Adresse", {'label_attr': {}}) }}
+                {{ form_widget(formRegister.adresse, {'attr': {'class': 'form-control'}}) }}
+            </div>
+            <div class="form-group">
+                {{ form_label(formRegister.ville, "Ville", {'label_attr': {}}) }}
+                {{ form_widget(formRegister.ville, {'attr': {'class': 'form-control'}}) }}
+            </div>
+            <div class="form-group">
+                {{ form_label(formRegister.codepostale, "Code Postale", {'label_attr': {}}) }}
+                {{ form_widget(formRegister.codepostale, {'attr': {'class': 'form-control'}}) }}
+            </div>
+            <div>
+                <input type="submit" class="btn btn-primary btn-sm" value="{{ 'registration.submit'|trans }}" />
+            </div>
+            {{ form_end(formRegister) }}
+        </div>
+    </div>
+</form>
+</center>
+</body>

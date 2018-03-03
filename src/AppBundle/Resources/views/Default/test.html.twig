@@ -1,0 +1,208 @@
+{% include 'AppBundle:Default:header.html.twig' %}
+<!-- Button trigger modal -->
+<div>
+    <div>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#loginModal">
+            Login Modal
+        </button>
+    </div>
+    <div>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#registerModal">
+            Register Modal
+        </button>
+    </div>
+
+    <div>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#profileModal">
+            Profile Modal
+        </button>
+    </div>
+
+    <div>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#changePasswordModal">
+            Change password Modal
+        </button>
+    </div>
+
+    <div>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#resetPasswordModal">
+            Reset password Modal
+        </button>
+    </div>
+
+    <div>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#contactModal">
+            contact  Modal
+        </button>
+    </div>
+
+
+    <!-- Modal profile -->
+    <div class="modal fade" id="profileModal" tabindex="-1" role="dialog" aria-labelledby="profileModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document" style="width: 650px;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="profileModalLabel">Connexion</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <iframe id="iframeprofile" style="width: 620px;border:none;overflow:hidden;"
+                            src="useredit"></iframe>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Modal register -->
+    <div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="registerModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document" style="width: 650px;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="registerModalLabel">Connexion</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <iframe id="iframeRegister" style="width: 620px;border:none;overflow:hidden;"
+                            src="registerb"></iframe>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Modal change password -->
+    <div class="modal fade" id="changePasswordModal" tabindex="-1" role="dialog"
+         aria-labelledby="changePasswordModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document" style="width: 400px;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="changePasswordLabel">Change password</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <center>
+                        <iframe id="iframechangepassword" style="width: 320px;border:none"
+                                src="userchangepassword"></iframe>
+                    </center>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Modal login -->
+    <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document" style="width: 400px;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="loginodalLabel">Connexion</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <center>
+                        <iframe id="iframeLogin" style="width: 320px;border:none" src="login"></iframe>
+                    </center>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal login -->
+    <div class="modal fade" id="resetPasswordModal" tabindex="-1" role="dialog"
+         aria-labelledby="resetPasswordModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document" style="width: 520px;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="resetPasswordLabel">Récupérer son mot de passe</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <center>
+                        <iframe id="iframeresetpassword" style="width: 500px;border:none"
+                                src="resetting/request"></iframe>
+                    </center>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Modal register -->
+    <div class="modal fade" id="contactModal" tabindex="-1" role="dialog" aria-labelledby="contactModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document" style="width: 420px;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="contactModalLabel">Contact</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <iframe id="iframeContact" style="width: 400px;border:none;"
+                            src="contact"></iframe>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        $("#iframeRegister").on('load', function () {
+            var element_iframe = $('#iframeRegister').contents().height();
+            $("#iframeRegister").height(element_iframe);
+        });
+        $("#iframeLogin").on('load', function () {
+            var element_iframe = $('#iframeLogin').contents().height();
+            $("#iframeLogin").height(element_iframe);
+        });
+        $("#iframeprofile").on('load', function () {
+            var element_iframe = $('#iframeprofile').contents().height();
+            $("#iframeprofile").height(element_iframe);
+        });
+        $("#iframechangepassword").on('load', function () {
+            var element_iframe = $('#iframechangepassword').contents().height();
+            $("#iframechangepassword").height(element_iframe);
+        });
+
+        $("#iframeresetpassword").on('load', function () {
+            var element_iframe = $('#iframeresetpassword').contents().height();
+            $("#iframeresetpassword").height(element_iframe);
+        });
+        $("#iframeContact").on('load', function () {
+            var element_iframe = $('#iframeContact').contents().height();
+            $("#iframeContact").height(element_iframe);
+        });
+
+    </script>

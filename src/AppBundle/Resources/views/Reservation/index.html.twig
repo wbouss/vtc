@@ -1,0 +1,245 @@
+{% include 'AppBundle:Default:header.html.twig' %}
+<!-- Button trigger modal -->
+
+<style>
+    #reservation{
+        width: 1000px;
+        border: solid black 1px;
+        margin: auto;
+        margin-top: 20px;
+    }
+
+</style>
+
+
+<body>
+
+
+{% include 'AppBundle:Default:menu.html.twig' %}
+
+
+
+   <div id="reservation">
+       <div id="warnings-panel"><b></b></div>
+       <div id="googlemap"  ></div>
+
+
+       <div class="heading wow fadeInUp" id="backdiv" >
+           <div class="row">
+               <div class="text-center col-sm-8 col-sm-offset-2">
+                   <!--<h2>Estimation et reservation</h2>!-->
+                   <div class="gtco-container">
+                       <div class="row">
+                           <div class="col-md-12 col-md-offset-0 text-left">
+
+
+                               <div class="row row-mt-15em">
+                                   <div class="col-md-7 mt-text animate-box" data-animate-effect="fadeInUp">
+                                       <h1 style="color: white !important">Reservez votre chauffeur en quelque clics !</h1>
+
+                                   </div>
+
+                                   <div class="col-md-4 col-md-push-1 animate-box" data-animate-effect="fadeInRight">
+
+                                       <div class="form-wrap">
+                                           <div class="tab">
+
+                                               <div class="tab-content">
+                                                   <div class="tab-content-inner active" data-content="signup">
+                                                       <h3 style="color: white !important">Estimation & Reservation</h3>
+                                                       {% if erreurs is not empty %}
+                                                           {% for  er in  erreurs %}
+                                                           <div class="alert alert-danger" role="alert">
+                                                               <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                                               <span class="sr-only">Error:</span>
+                                                               {{ er  }}
+                                                           </div>
+                                                           {% endfor %}
+                                                       {%  endif  %}
+                                                       {{ form_start(form_devis) }}
+                                                       <div class="row form-group">
+                                                           <div class="col-md-12">
+                                                               {# Génération du label. #}
+                                                               {{ form_label(form_devis.arrive, "Arrivé", {'label_attr': { 'style': 'color: white !important' ,  'class': 'col-sm-2 control-label'}}) }}
+                                                               {# Affichage des erreurs pour ce champ précis. #}
+                                                               {{ form_errors(form_devis.arrive) }}
+                                                               {# Génération de l'input. #}
+                                                               {{ form_widget(form_devis.arrive, {'attr': { 'style': 'height:35px;background: white;' , 'class': 'form-control'}}) }}
+                                                           </div>
+
+                                                           <div class="col-md-12">
+                                                               {# Génération du label. #}
+                                                               {{ form_label(form_devis.depart, "Départ", {'label_attr': { 'style': 'color: white !important' ,  'class': 'col-sm-2 control-label'}}) }}
+                                                               {# Affichage des erreurs pour ce champ précis. #}
+                                                               {{ form_errors(form_devis.depart) }}
+                                                               {# Génération de l'input. #}
+                                                               {{ form_widget(form_devis.depart, {'attr': { 'style': 'height:35px;background: white;' , 'class': 'form-control'}}) }}
+                                                           </div>
+
+                                                           <div class="col-md-12">
+                                                               {# Génération du label. #}
+                                                               {{ form_label(form_devis.datePrevu, "date", {'label_attr': { 'style': 'color: white !important' ,  'class': 'col-sm-2 control-label'}}) }}
+                                                               {# Affichage des erreurs pour ce champ précis. #}
+                                                               {{ form_errors(form_devis.datePrevu) }}
+                                                               {# Génération de l'input. #}
+                                                               {{ form_widget(form_devis.datePrevu, {'attr': { 'style': 'height:35px;background: white;' , 'class': 'form-control datepickerPrevu'}}) }}
+                                                           </div>
+
+                                                           <div class="col-md-12">
+                                                               {# Génération du label. #}
+                                                               {{ form_label(form_devis.nbPersonne, "nbPersonne", {'label_attr': { 'style': 'color: white !important' ,  'class': 'col-sm-2 control-label'}}) }}
+                                                               {# Affichage des erreurs pour ce champ précis. #}
+                                                               {{ form_errors(form_devis.nbPersonne) }}
+                                                               {# Génération de l'input. #}
+                                                               {{ form_widget(form_devis.nbPersonne, {'attr': { 'style': 'height:35px;background: white;' , 'class': 'form-control'}}) }}
+                                                           </div>
+
+                                                           <div class="col-md-12">
+                                                               {# Génération du label. #}
+                                                               {{ form_label(form_devis.nbBagage, "nbBagage", {'label_attr': { 'style': 'color: white !important' ,  'class': 'col-sm-2 control-label'}}) }}
+                                                               {# Affichage des erreurs pour ce champ précis. #}
+                                                               {{ form_errors(form_devis.nbBagage) }}
+                                                               {# Génération de l'input. #}
+                                                               {{ form_widget(form_devis.nbBagage, {'attr': { 'style': 'height:35px;background: white;' , 'class': 'form-control'}}) }}
+                                                           </div>
+                                                           <div class="col-md-12" style="margin-top: 15px;">
+                                                               {{ form_widget(form_devis.submit, { 'label': 'Obtenir un prix'  , 'attr': { 'style': 'width:100%;height:35px;' , 'class': 'btn btn-primary'}}) }}
+                                                           </div>
+
+                                                       </div>
+
+                                                   </div>
+                                                   {{ form_end(form_devis) }}
+                                                   </form>
+                                               </div>
+                                           </div>
+                                       </div>
+                                   </div>
+                               </div>
+                           </div>
+
+
+                       </div>
+                   </div>
+
+               </div>
+           </div>
+       </div>
+   </div>
+
+
+
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCrEfQ8dj-0qJ9jAruwxWV06qKR8dfupXk&libraries=places"
+        async defer></script>
+
+
+{% javascripts
+'@AppBundle/Resources/public/js/jquery.js'
+'@AppBundle/Resources/public/js/bootstrap.min.js'
+'@AppBundle/Resources/public/js/jquery.inview.min.js'
+'@AppBundle/Resources/public/js/wow.min.js'
+'@AppBundle/Resources/public/js/mousescroll.js'
+'@AppBundle/Resources/public/js/smoothscroll.js'
+'@AppBundle/Resources/public/js/jquery.countTo.js'
+'@AppBundle/Resources/public/js/lightbox.min.js'
+%}
+<script src="{{ asset_url }}"></script>
+{% endjavascripts %}
+
+{% javascripts
+'../vendor/components/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js'
+'../vendor/components/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.fr.js'
+
+%}
+<script src="{{ asset_url }}"></script>
+{% endjavascripts %}
+
+
+<script>
+    $('.datepickerPrevu').datetimepicker({
+        language: 'fr',
+        startDate: '-0d'
+    });
+</script>
+
+
+<script>
+    var placeSearch, autocomplete;
+
+    function initAutocomplete() {
+        // Create the autocomplete object, restricting the search to geographical
+        // location types.
+        autocomplete = new google.maps.places.Autocomplete(
+            /** @type {!HTMLInputElement} */(document.getElementById('appbundle_devis_depart')),
+            {types: ['geocode']});
+
+        autocomplete_2 = new google.maps.places.Autocomplete(
+            /** @type {!HTMLInputElement} */(document.getElementById('appbundle_devis_arrive')),
+            {types: ['geocode']});
+
+    }
+    initAutocomplete();
+
+</script>
+
+{#
+{% if devis is defined %}
+
+<script>
+    var map;
+    var directionsDisplay;
+    var directionsService;
+    var stepDisplay;
+    var markerArray = [];
+
+    directionsService = new google.maps.DirectionsService();
+    var manhattan = new google.maps.LatLng(40.7711329, -73.9741874);
+
+    var mapOptions = {
+        zoom: 13,
+        center: manhattan
+    }
+
+    map = new google.maps.Map(document.getElementById('googlemap'), mapOptions);
+
+    for (i = 0; i < markerArray.length; i++) {
+        markerArray[i].setMap(null);
+    }
+
+    // Create a renderer for directions and bind it to the map.
+    var directionsDisplay = new google.maps.DirectionsRenderer({map: map});
+
+
+    var start = '{{ devis.depart }}';
+    var end = '{{ devis.arrive }}';
+    var request = {
+        origin: start,
+        destination: end,
+        travelMode: 'DRIVING'
+    };
+
+    // Route the directions and pass the response to a
+    // function to create markers for each step.
+
+    directionsService.route(request, function(response, status) {
+
+        if (status == "OK") {
+            var warnings = document.getElementById("warnings-panel");
+            warnings.innerHTML = "" + response.routes[0].warnings + "";
+            directionsDisplay.setDirections(response);
+        }
+    });
+
+
+    function attachInstructionText(marker, text) {
+        google.maps.event.addListener(marker, 'click', function() {
+            stepDisplay.setContent(text);
+            stepDisplay.open(map, marker);
+        });
+    }
+</script>
+{%  endif %}#}
+
+</body>
+</html>
