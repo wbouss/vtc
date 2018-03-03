@@ -858,7 +858,7 @@
         var date = $("#appbundle_devis_datePrevu").val();
         var personne = $("#appbundle_devis_nbPersonne").val();
         var bagage = $("#appbundle_devis_nbBagage").val();
-
+        $("#appbundle_devis_submit").prop("disabled",true);
          $.post(  Routing.generate("errorsFormReservation" , { depart: depart , arrive: arrive, date:date , personne: personne, bagage: bagage }) , function (retour) {
 
 
@@ -877,6 +877,8 @@
                  content += "</ul>";
                  $("#errorsFormP").html(content);
                  $("#modalFormErrors").modal('show');
+                 $("#appbundle_devis_submit").prop("disabled",false);
+
              }
          });
          return false;
