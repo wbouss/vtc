@@ -163,8 +163,8 @@ class ReservationController extends Controller
         $reservation->setDatePrevu($devis->getDatePrevu());
         $reservation->setDepart($devis->getDepart());
         $reservation->setArrive($devis->getArrive());
-        $reservation->setDuree($devis->getDuree());
-        $reservation->setDistance($devis->getDistance());
+        $reservation->setDuree($devis->getDuree() / 60 );
+        $reservation->setDistance($devis->getDistance() /1000 );
         $reservation->setDate(new \DateTime());
         $reservation->setPrix($devis->getPrix());
         $reservation->setUser($this->getUser());
