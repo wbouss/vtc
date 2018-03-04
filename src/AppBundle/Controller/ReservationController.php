@@ -41,7 +41,7 @@ class ReservationController extends Controller
         $devis->setNbPersonne($bagage);
 
         $infoDrive =  $this->get("app.reservation")->getInfoGoogleApi($depart, $arrive );
-        $erreurs  = $this->get("app.reservation")->getErrors($infoDrive , $devis);
+        $erreurs  = $this->get("app.reservation")->getErrors($infoDrive , $devis , $this->getDoctrine()->getManager() );
 
         if( empty($erreurs))
             return new Response("OK");
@@ -72,7 +72,7 @@ class ReservationController extends Controller
             $infoDrive =  $this->get("app.reservation")->getInfoGoogleApi($devis->getDepart(), $devis->getArrive());
             $form =  $this->get('form.factory')->create( DevisType::class  ,$devis);
 
-            $erreurs  = $this->get("app.reservation")->getErrors($infoDrive , $devis);
+            $erreurs  = $this->get("app.reservation")->getErrors($infoDrive , $devis , $this->getDoctrine()->getManager());
             if(!empty($erreurs))
                 return $this->render('AppBundle:Reservation:index.html.twig' , array(  "devis" => $devis,"erreurs" => $erreurs  , "infodrive" => $infoDrive ,  'form_devis' => $form->createView()));
         }

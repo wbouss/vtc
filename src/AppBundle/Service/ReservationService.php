@@ -2,13 +2,20 @@
 
 namespace AppBundle\Service;
 
+use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\Security\Http;
 use GuzzleHttp\Client;
-
+use DateTime;
 
 class ReservationService
 {
     private  $key = "AIzaSyCrEfQ8dj-0qJ9jAruwxWV06qKR8dfupXk";
+    private $container;
+
+    public function __construct(Container $container) {
+        $this->container = $container;
+    }
+
 
     public function getInfoGoogleApi($origin , $destinations ){
         if( !ReservationService::isValidAdress($origin , $destinations ))
@@ -98,8 +105,15 @@ class ReservationService
     }
 
 
-    public function getErrors($infoDrive , $devis){
+    public function getErrors($infoDrive , $devis , $em ){
         $erreurs = [];
+
+        $repo_param = $em->getRepository("AppBundle:Parametre");
+        $active = $repo_param->findOneByNom("Activation du site")->getValeur();
+        if( $active != "En marche")
+        {
+            return [ "Le site est actuellement fermé, veuillez réessayer ultérieurement" ];
+        }
         if( $infoDrive == "KO")
             $erreurs[] =  "Itinéraire impossible, veuillez choisir un autre itinéraire ";
 
@@ -108,11 +122,36 @@ class ReservationService
         $devisTimeStamp = date_create_from_format("d/m/Y H:i" , $devisTimeStamp)->getTimestamp();
 
         if(  $currentDateOneHours > $devisTimeStamp )
-            $erreurs[] =  "Réserver 1 heure plus tard";
+            $erreurs[] =  "Veuillez réserver 1 heure plus tard";
+
+         if( !ReservationService::IsBetween( $devis->getDatePrevu() ))
+             $erreurs[] = "Veuillez réserver entre ".$this->container->getParameter('START_ORDER_HOUR').":".$this->container->getParameter('START_ORDER_MIN')." et ".$this->container->getParameter('END_ORDER_HOUR').":".$this->container->getParameter('END_ORDER_MIN');
 
         return $erreurs;
     }
 
+    public function  IsBetween( $devisDate ){
+        $start_hour = $this->container->getParameter('START_ORDER_HOUR');
+        $start_min = $this->container->getParameter('START_ORDER_MIN');
+        $end_hour = $this->container->getParameter('END_ORDER_HOUR');
+        $end_min = $this->container->getParameter('END_ORDER_MIN');
+
+        $devisTime = date_create_from_format("d/m/Y H:i" , $devisDate );
+        $devis_hour = $devisTime->format('H');
+        $devis_min = $devisTime->format('i');
+
+
+        $currentTime = (new DateTime($devis_hour.':'.$devis_min))->modify('+1 day');
+        $startTime = new DateTime($start_hour.":".$start_min);
+        $endTime = (new DateTime($end_hour.":".$end_min))->modify('+1 day');
+
+
+        if ($currentTime >= $startTime && $currentTime <= $endTime) {
+            return true;
+        }
+        else
+            return false;
+    }
 
 
     public function encrypt($pure_string, $encryption_key) {

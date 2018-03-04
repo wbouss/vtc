@@ -21,7 +21,6 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request)
     {
-
         $devis = new Devis();
         $contact = new Contact();
         $form =  $this->get('form.factory')->create( DevisType::class  ,$devis);

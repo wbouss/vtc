@@ -2,6 +2,10 @@
 # http://symfony.com/doc/current/service_container.html
 parameters:
 #    parameter_name: value
+    START_ORDER_HOUR: "09"
+    START_ORDER_MIN: "15"
+    END_ORDER_HOUR: "23"
+    END_ORDER_MIN: "30"
 
 services:
 #    service_name:
@@ -10,3 +14,4 @@ services:
 
     app.reservation:
         class: AppBundle\Service\ReservationService
+        arguments: ['@service_container']
